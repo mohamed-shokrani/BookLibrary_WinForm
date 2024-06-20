@@ -20,6 +20,7 @@ namespace WindowsForm_ofass
         public DbSet<Penalty> Penalties { get; set; }
         public DbSet<BookLanguage> BookLanguages  { get; set; }
         public DbSet<PublishingHouse> PublishingHouses { get; set; }
+        public DbSet<ReturnedBook> ReturnedBooks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace WindowsForm_ofass
 {
-    public partial class Form9 : Form
+    public partial class AboutUs : Form
     {
-        public Form9()
+        public AboutUs()
         {
             InitializeComponent();
         }

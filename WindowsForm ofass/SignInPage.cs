@@ -8,16 +8,18 @@ using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Windows.Forms;
+using WindowsForm_ofass.Constant;
+using WindowsForm_ofass.Models;
 
 namespace WindowsForm_ofass
 {
-    public partial class Form1 : Form
+    public partial class SignInPage : Form
     {
 
         private readonly BookLibraryContext _context;
 
 
-        public Form1()
+        public SignInPage()
         {
             InitializeComponent();
 
@@ -30,15 +32,20 @@ namespace WindowsForm_ofass
         {
             string username = UserName.Text;
             string password = Password.Text;
+            var check = ValidateCredentials(username, password);
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
                 MessageBox.Show("  الرجاء ادخال اسم المستخدم و كلمة المرور ");
                 return;
             }
-            else if (ValidateCredentials(username, password))
+           
+            else if (check.Item1)
             {
-              
-                Form2 form2 = new Form2();
+                // Set CurrentUser properties upon successful authentication
+                CurrentUser.UserId = check.Item2.LibraryUserId;
+                CurrentUser.UserName = check.Item2.LibraryUserName;
+                CurrentUser.IsAdmin = check.Item2.IsAdmin;
+                HomePage form2 = new HomePage();
                 form2.Show();
                 this.Hide(); // Hide the login form
 
@@ -49,21 +56,21 @@ namespace WindowsForm_ofass
 
         }
 
-        private bool ValidateCredentials(string username, string password)
+        private (bool,LibraryUser) ValidateCredentials(string username, string password)
         {
             try
             {
 
-                var user = _context.Users.FirstOrDefault(x => x.UserName == username && x.Password == password);
+                var user = _context.LibraryUsers.FirstOrDefault(x => x.LibraryUserName == username && x.Password == password);
                 if (user != null)
-                    return true;
-                return false;
+                    return (true,user);
+                return (false,null);
               
             }
             catch (Exception ex)
             {
-              
-                return false;
+
+                return (false, null);
             }
            
         }

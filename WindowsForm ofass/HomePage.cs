@@ -6,14 +6,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsForm_ofass.BookManagemnt;
+using WindowsForm_ofass.BookSubManagemnt;
+using WindowsForm_ofass.Constant;
 
 namespace WindowsForm_ofass
 {
-    public partial class Form2 : Form
+    public partial class HomePage : Form
     {
         private Timer timer; // Declare a Timer object
 
-        public Form2()
+        public HomePage()
         {
             InitializeComponent();
             this.BackColor = Color.FromArgb(0, 0, 0);
@@ -38,11 +41,19 @@ namespace WindowsForm_ofass
         private void Form2_Load(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.None;
+            if (!CurrentUser.IsAdmin)
+            {
+                BookSubManagment.Visible = false;
+                BorrowAndReturnBtn.Visible = false;
+                BookManageBtn.Visible = false;
+                LlibUserManagemntBtn.Visible = false;
+                BookCat.Visible = false;
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Form3 form3 = new Form3();
+            BorrowAndReturn form3 = new BorrowAndReturn();
             form3.Show();
         }
 
@@ -53,7 +64,7 @@ namespace WindowsForm_ofass
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form4 form4 = new Form4();
+            LibraryGeneralSerach form4 = new LibraryGeneralSerach();
             form4.Show();
         }
 
@@ -82,19 +93,19 @@ namespace WindowsForm_ofass
 
         private void button8_Click(object sender, EventArgs e)
         {
-            Form9 form9 = new Form9();
+            AboutUs form9 = new AboutUs();
             form9.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form5 form5 = new Form5();
-            form5.Show();
+            var BookManagement = new BookManagement();
+            BookManagement.Show();
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Form7 form7 = new Form7();
+            LibraryReport form7 = new LibraryReport();
             form7.Show();
         }
 
@@ -116,6 +127,12 @@ namespace WindowsForm_ofass
         {
             LibraryUserManagement libraryUserManagement = new LibraryUserManagement();
             libraryUserManagement.Show();
+            
+        }
+
+        private void BookSubManagment_Click(object sender, EventArgs e)
+        {
+            new BookSubManagment().Show();
             
         }
     }

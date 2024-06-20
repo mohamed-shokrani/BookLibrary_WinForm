@@ -1,6 +1,6 @@
 ﻿namespace WindowsForm_ofass
 {
-    partial class Form1
+    partial class SignInPage
     {
         /// <summary>
         /// Required designer variable.
@@ -90,7 +90,7 @@
             this.UserName.TabIndex = 4;
             this.UserName.TextChanged += new System.EventHandler(this.UserName_TextChanged);
             // 
-            // Form1
+            // SignInPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -102,8 +102,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SignIn);
             this.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "SignInPage";
+            this.Text = " صفحة تسجيل الدخول";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

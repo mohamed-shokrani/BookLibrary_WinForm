@@ -1,6 +1,6 @@
 ﻿namespace WindowsForm_ofass
 {
-    partial class Form4
+    partial class LibraryGeneralSerach
     {
         /// <summary>
         /// Required designer variable.

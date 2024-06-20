@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace WindowsForm_ofass
 {
-    partial class Form3
+    partial class BorrowAndReturn
     {
         /// <summary>
         /// Required designer variable.
@@ -31,13 +31,12 @@ namespace WindowsForm_ofass
         /// </summary>
         private void InitializeComponent()
         {
-            this.BorrowerName = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.PenaltyValue = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.returnBookBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -53,15 +52,9 @@ namespace WindowsForm_ofass
             this.DateOfBorrowing = new System.Windows.Forms.DateTimePicker();
             this.DateOfReturn = new System.Windows.Forms.DateTimePicker();
             this.CB_BorrowerName = new System.Windows.Forms.ComboBox();
+            this.QuantityNeeded_Input = new System.Windows.Forms.TextBox();
+            this.QuantityNeeded_Label = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // BorrowerName
-            // 
-            this.BorrowerName.Location = new System.Drawing.Point(487, 81);
-            this.BorrowerName.Name = "BorrowerName";
-            this.BorrowerName.Size = new System.Drawing.Size(139, 20);
-            this.BorrowerName.TabIndex = 1;
-            this.BorrowerName.TextChanged += new System.EventHandler(this.BorrowerName_TextChanged);
             // 
             // textBox4
             // 
@@ -72,7 +65,7 @@ namespace WindowsForm_ofass
             // 
             // PenaltyValue
             // 
-            this.PenaltyValue.Location = new System.Drawing.Point(63, 126);
+            this.PenaltyValue.Location = new System.Drawing.Point(63, 144);
             this.PenaltyValue.Name = "PenaltyValue";
             this.PenaltyValue.Size = new System.Drawing.Size(132, 20);
             this.PenaltyValue.TabIndex = 4;
@@ -112,24 +105,24 @@ namespace WindowsForm_ofass
             this.button3.Text = "الاعادة";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // returnBookBtn
             // 
-            this.button4.BackColor = System.Drawing.Color.LightGray;
-            this.button4.ForeColor = System.Drawing.Color.DarkGray;
-            this.button4.Location = new System.Drawing.Point(511, 282);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(115, 29);
-            this.button4.TabIndex = 9;
-            this.button4.Text = "الأعـــــــادة";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.returnBookBtn.BackColor = System.Drawing.Color.LightGray;
+            this.returnBookBtn.ForeColor = System.Drawing.Color.DarkGray;
+            this.returnBookBtn.Location = new System.Drawing.Point(511, 282);
+            this.returnBookBtn.Name = "returnBookBtn";
+            this.returnBookBtn.Size = new System.Drawing.Size(115, 29);
+            this.returnBookBtn.TabIndex = 9;
+            this.returnBookBtn.Text = "الأعـــــــادة";
+            this.returnBookBtn.UseVisualStyleBackColor = false;
+            this.returnBookBtn.Click += new System.EventHandler(this.returnBookBtn_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.Highlight;
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(632, 133);
+            this.label1.Location = new System.Drawing.Point(646, 129);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 13);
             this.label1.TabIndex = 12;
@@ -140,7 +133,7 @@ namespace WindowsForm_ofass
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.Highlight;
             this.label2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label2.Location = new System.Drawing.Point(653, 163);
+            this.label2.Location = new System.Drawing.Point(658, 163);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(55, 13);
             this.label2.TabIndex = 13;
@@ -184,7 +177,7 @@ namespace WindowsForm_ofass
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.Red;
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(201, 129);
+            this.label6.Location = new System.Drawing.Point(201, 144);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(37, 13);
             this.label6.TabIndex = 17;
@@ -276,17 +269,38 @@ namespace WindowsForm_ofass
             // CB_BorrowerName
             // 
             this.CB_BorrowerName.FormattingEnabled = true;
-            this.CB_BorrowerName.Location = new System.Drawing.Point(487, 126);
+            this.CB_BorrowerName.Location = new System.Drawing.Point(496, 126);
             this.CB_BorrowerName.Name = "CB_BorrowerName";
             this.CB_BorrowerName.Size = new System.Drawing.Size(121, 21);
             this.CB_BorrowerName.TabIndex = 32;
             this.CB_BorrowerName.SelectedIndexChanged += new System.EventHandler(this.CB_BorrowerName_SelectedIndexChanged_1);
+            // 
+            // QuantityNeeded_Input
+            // 
+            this.QuantityNeeded_Input.Location = new System.Drawing.Point(56, 118);
+            this.QuantityNeeded_Input.Name = "QuantityNeeded_Input";
+            this.QuantityNeeded_Input.Size = new System.Drawing.Size(139, 20);
+            this.QuantityNeeded_Input.TabIndex = 33;
+            this.QuantityNeeded_Input.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.QuantityNeeded_Input_KeyPress);
+            // 
+            // QuantityNeeded_Label
+            // 
+            this.QuantityNeeded_Label.AutoSize = true;
+            this.QuantityNeeded_Label.BackColor = System.Drawing.SystemColors.Highlight;
+            this.QuantityNeeded_Label.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.QuantityNeeded_Label.Location = new System.Drawing.Point(201, 121);
+            this.QuantityNeeded_Label.Name = "QuantityNeeded_Label";
+            this.QuantityNeeded_Label.Size = new System.Drawing.Size(73, 13);
+            this.QuantityNeeded_Label.TabIndex = 34;
+            this.QuantityNeeded_Label.Text = "الكمية المطلوبة";
             // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 351);
+            this.Controls.Add(this.QuantityNeeded_Label);
+            this.Controls.Add(this.QuantityNeeded_Input);
             this.Controls.Add(this.CB_BorrowerName);
             this.Controls.Add(this.DateOfReturn);
             this.Controls.Add(this.DateOfBorrowing);
@@ -302,13 +316,12 @@ namespace WindowsForm_ofass
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.returnBookBtn);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.PenaltyValue);
             this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.BorrowerName);
             this.Name = "Form3";
             this.Text = "شـــاشــة الأعــارة والأعــادة";
             this.Load += new System.EventHandler(this.Form3_Load);
@@ -318,14 +331,12 @@ namespace WindowsForm_ofass
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox BorrowerName;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox PenaltyValue;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button returnBookBtn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -341,5 +352,7 @@ namespace WindowsForm_ofass
         private System.Windows.Forms.DateTimePicker DateOfBorrowing;
         private System.Windows.Forms.DateTimePicker DateOfReturn;
         private System.Windows.Forms.ComboBox CB_BorrowerName;
+        private TextBox QuantityNeeded_Input;
+        private Label QuantityNeeded_Label;
     }
 }

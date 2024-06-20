@@ -76,7 +76,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(398, 150);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 13);
+            this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "عدد النسخ";
             // 
@@ -86,7 +86,7 @@
             this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.label3.Location = new System.Drawing.Point(392, 78);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 13);
+            this.label3.Size = new System.Drawing.Size(62, 13);
             this.label3.TabIndex = 4;
             this.label3.Text = "رقم التصنيف";
             // 
@@ -95,7 +95,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(396, 114);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 13);
+            this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 5;
             this.label4.Text = "اسم الكتاب";
             this.label4.Click += new System.EventHandler(this.label4_Click);
@@ -161,7 +161,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(748, 262);
+            this.ClientSize = new System.Drawing.Size(775, 262);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);

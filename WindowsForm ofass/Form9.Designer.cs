@@ -1,6 +1,6 @@
 ﻿namespace WindowsForm_ofass
 {
-    partial class Form9
+    partial class AboutUs
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form9));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutUs));
             this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 

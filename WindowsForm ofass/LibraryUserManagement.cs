@@ -134,7 +134,7 @@ namespace WindowsForm_ofass
 
         private void Home_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2();
+            HomePage form2 = new HomePage();
             form2.Show();
             this.Hide(); // Hide the login form
         }

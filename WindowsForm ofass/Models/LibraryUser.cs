@@ -17,6 +17,9 @@ namespace WindowsForm_ofass.Models
 
         [StringLength(500)]
         public string ReasonNotAllowed { get; set; }
+        [Required]
+        public string Password {  get; set; }
+        public bool IsAdmin { get; set; } = false;
         public ICollection<BorrowedBook> BorrowedBooks { get; set; }
         public ICollection<Penalty> Penalties { get; set; }
     }

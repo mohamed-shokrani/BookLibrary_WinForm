@@ -49,7 +49,7 @@
             // 
             // Update
             // 
-            this.Update.Location = new System.Drawing.Point(575, 29);
+            this.Update.Location = new System.Drawing.Point(585, 79);
             this.Update.Name = "Update";
             this.Update.Size = new System.Drawing.Size(111, 23);
             this.Update.TabIndex = 1;
@@ -59,7 +59,7 @@
             // 
             // AddNew
             // 
-            this.AddNew.Location = new System.Drawing.Point(702, 29);
+            this.AddNew.Location = new System.Drawing.Point(713, 79);
             this.AddNew.Name = "AddNew";
             this.AddNew.Size = new System.Drawing.Size(75, 23);
             this.AddNew.TabIndex = 2;

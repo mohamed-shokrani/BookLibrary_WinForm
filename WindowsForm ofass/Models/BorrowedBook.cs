@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowsForm_ofass.Models
 {
@@ -28,10 +24,12 @@ namespace WindowsForm_ofass.Models
 
 
         public int BorrowedQuantity { get; set; } = 0;
-        public bool CannotBeReturned { get; set; }
+        //public bool CannotBeReturned { get; set; }
 
-        [StringLength(500)]
-        public string RefusalReason { get; set; }
+        //[StringLength(500)]
+        //public string RefusalReason { get; set; }
+       
+
 
         [ForeignKey("LibraryUser")]
         public int LibraryUserId { get; set; }

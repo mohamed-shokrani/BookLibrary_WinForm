@@ -2,7 +2,7 @@
 
 namespace WindowsForm_ofass
 {
-    partial class Form5
+    partial class BookUpdateAndCreate
     {
         /// <summary>
         /// Required designer variable.
@@ -185,7 +185,6 @@ namespace WindowsForm_ofass
             this.BookName.Name = "BookName";
             this.BookName.Size = new System.Drawing.Size(100, 20);
             this.BookName.TabIndex = 22;
-            this.BookName.TextChanged += new System.EventHandler(this.BookName_TextChanged);
             // 
             // SerialNum
             // 
@@ -194,7 +193,6 @@ namespace WindowsForm_ofass
             this.SerialNum.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.SerialNum.Size = new System.Drawing.Size(100, 20);
             this.SerialNum.TabIndex = 20;
-            this.SerialNum.TextChanged += new System.EventHandler(this.SerialNum_TextChanged);
             this.SerialNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TotalQuntity_KeyPress);
             // 
             // comboBox1
@@ -242,7 +240,6 @@ namespace WindowsForm_ofass
             this.BookPagesNum.Name = "BookPagesNum";
             this.BookPagesNum.Size = new System.Drawing.Size(100, 20);
             this.BookPagesNum.TabIndex = 41;
-            this.BookPagesNum.TextChanged += new System.EventHandler(this.BookPagesNum_TextChanged);
             this.BookPagesNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TotalQuntity_KeyPress);
             // 
             // BookValue
@@ -251,7 +248,6 @@ namespace WindowsForm_ofass
             this.BookValue.Name = "BookValue";
             this.BookValue.Size = new System.Drawing.Size(100, 20);
             this.BookValue.TabIndex = 42;
-            this.BookValue.TextChanged += new System.EventHandler(this.BookValue_TextChanged);
             this.BookValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TotalQuntity_KeyPress);
             // 
             // label10
@@ -300,7 +296,6 @@ namespace WindowsForm_ofass
             this.CB_BookCategory.Name = "CB_BookCategory";
             this.CB_BookCategory.Size = new System.Drawing.Size(121, 21);
             this.CB_BookCategory.TabIndex = 48;
-            this.CB_BookCategory.SelectedIndexChanged += new System.EventHandler(this.CB_BookCategory_SelectedIndexChanged);
             // 
             // CB_AuthorName
             // 
@@ -309,7 +304,6 @@ namespace WindowsForm_ofass
             this.CB_AuthorName.Name = "CB_AuthorName";
             this.CB_AuthorName.Size = new System.Drawing.Size(121, 21);
             this.CB_AuthorName.TabIndex = 49;
-            this.CB_AuthorName.SelectedIndexChanged += new System.EventHandler(this.CB_AuthorName_SelectedIndexChanged);
             // 
             // CB_BookLang
             // 
@@ -335,7 +329,6 @@ namespace WindowsForm_ofass
             this.TotalQuntity.Name = "TotalQuntity";
             this.TotalQuntity.Size = new System.Drawing.Size(100, 20);
             this.TotalQuntity.TabIndex = 51;
-            this.TotalQuntity.TextChanged += new System.EventHandler(this.TotalQuntity_TextChanged);
             this.TotalQuntity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TotalQuntity_KeyPress);
             // 
             // CB_PublishingHouse

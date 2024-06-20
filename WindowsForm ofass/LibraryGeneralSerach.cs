@@ -9,10 +9,10 @@ using System.Windows.Forms;
 
 namespace WindowsForm_ofass
 {
-    public partial class Form4 : Form
+    public partial class LibraryGeneralSerach : Form
     {
         readonly BookLibraryContext _context;
-        public Form4()
+        public LibraryGeneralSerach()
 
 
         {
