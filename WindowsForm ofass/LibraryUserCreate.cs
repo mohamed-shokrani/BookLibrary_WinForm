@@ -35,7 +35,8 @@ namespace WindowsForm_ofass
             table.Columns.Add("غير مسموح له بالاستعارة", typeof(bool));
             table.Columns.Add("رقم التليفون", typeof(string));
             table.Columns.Add("الاسم", typeof(string));
-            
+            table.Columns.Add("الرقم السرى", typeof(string));
+
             // Set the DataSource of the DataGridView
             dataGridView1.DataSource = table;
 
@@ -59,7 +60,7 @@ namespace WindowsForm_ofass
             }
         }
 
-      
+
         private void Create_Click(object sender, EventArgs e)
         {
             List<LibraryUser> newUsers = new List<LibraryUser>();
@@ -69,35 +70,50 @@ namespace WindowsForm_ofass
                 // Skip the last row which is usually the new row for data entry
                 if (row.IsNewRow)
                     continue;
-              
+
                 var libraryUserName = row.Cells["الاسم"].FormattedValue.ToString();
-                var isNotAllowedToBorrow = bool.Parse(row.Cells["غير مسموح له بالاستعارة"].FormattedValue.ToString());
+                var phoneNumberStr = row.Cells["رقم التليفون"].FormattedValue.ToString();
+                var isNotAllowedToBorrowStr = row.Cells["غير مسموح له بالاستعارة"].FormattedValue.ToString();
                 var reasonNotAllowed = row.Cells["السبب"].FormattedValue.ToString();
-                
+                var password = row.Cells["الرقم السرى"].FormattedValue.ToString(); // Assuming you have a column for password
+
                 // Validate required fields
-                if (isNotAllowedToBorrow && string.IsNullOrWhiteSpace(reasonNotAllowed))
+                if (string.IsNullOrWhiteSpace(libraryUserName) || string.IsNullOrWhiteSpace(phoneNumberStr))
                 {
-                    MessageBox.Show("الرجاء إدخال سبب عدم الاستعارة في كل الصفوف.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("الرجاء إدخال اسم المستخدم ورقم التليفون في كل الصفوف.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if (int.TryParse(row.Cells["رقم التليفون"].FormattedValue.ToString(), out int phone) && !string.IsNullOrWhiteSpace(libraryUserName))
+
+                if (!int.TryParse(phoneNumberStr, out int phoneNumber))
                 {
-                    
-                    var newLibUser = new LibraryUser
-                    {
-                        LibraryUserName = libraryUserName,
-                        PhoneNumber = phone,
-                        IsNotAllowedToBorrow = isNotAllowedToBorrow,
-                        ReasonNotAllowed = reasonNotAllowed
-                    };
-
-                    newUsers.Add(newLibUser);
-                   continue;
+                    MessageBox.Show("الرجاء إدخال رقم تليفون صحيح.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
-                MessageBox.Show("الرجاء إدخال بيانات صحيحة  اسم المستخدم ورقم التليفون مطلوب.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
 
+                bool isNotAllowedToBorrow = false;
+                if (!string.IsNullOrWhiteSpace(isNotAllowedToBorrowStr))
+                {
+                    isNotAllowedToBorrow = bool.Parse(isNotAllowedToBorrowStr);
+                    if (isNotAllowedToBorrow && string.IsNullOrWhiteSpace(reasonNotAllowed))
+                    {
+                        MessageBox.Show("الرجاء إدخال سبب عدم الاستعارة في كل الصفوف.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                var newLibUser = new LibraryUser
+                {
+                    LibraryUserName = libraryUserName,
+                    PhoneNumber = phoneNumber,
+                    IsNotAllowedToBorrow = isNotAllowedToBorrow,
+                    ReasonNotAllowed = isNotAllowedToBorrow ? reasonNotAllowed : null, // Clear reason if not disallowed
+                    Password = password, // Assuming you have a column for password
+                    IsAdmin = false // Assuming all new users are not admins by default
+                };
+
+                newUsers.Add(newLibUser);
             }
+
             if (newUsers.Any())
             {
                 // Add all new users to the context and save changes
@@ -105,11 +121,13 @@ namespace WindowsForm_ofass
                 _context.SaveChanges();
 
                 MessageBox.Show("تمت إضافة جميع السجلات بنجاح.", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
             }
-            MessageBox.Show("الرجاء إدخال بيانات صحيحة لإضافة سجلات جديدة.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
+            else
+            {
+                MessageBox.Show("الرجاء إدخال بيانات صحيحة لإضافة سجلات جديدة.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

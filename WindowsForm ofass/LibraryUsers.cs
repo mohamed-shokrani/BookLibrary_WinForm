@@ -37,6 +37,9 @@ namespace WindowsForm_ofass
             table.Columns.Add("رقم التليفون", typeof(string));
             table.Columns.Add("الاسم", typeof(string));
             table.Columns.Add("الرقم", typeof(int)); // Add Id column
+            table.Columns.Add("الرقم السرى", typeof(string)); // Add Id column
+            table.Columns.Add("ادمن", typeof(bool)); // Add Id column
+
             // Set the DataSource of the DataGridView
             dataGridView1.DataSource = table;
 
@@ -86,6 +89,7 @@ namespace WindowsForm_ofass
                     MessageBox.Show(" الرجاء ادخل سبب عدم الاستعارة");
                     return;
                 }
+                var isAdmin = bool.Parse(firstRow.Cells["ادمن"].FormattedValue.ToString());
 
                 var libraryUserName = firstRow.Cells["الاسم"].FormattedValue.ToString();
                 var libUser = _context.LibraryUsers.FirstOrDefault(x => x.LibraryUserId == id);
@@ -93,6 +97,8 @@ namespace WindowsForm_ofass
                 libUser.PhoneNumber = int.Parse(firstRow.Cells["رقم التليفون"].FormattedValue.ToString());
                 libUser.IsNotAllowedToBorrow = IsNotAllowedToBorrow;
                 libUser.ReasonNotAllowed = reasonNotAllowed;
+                libUser.Password = firstRow.Cells["الرقم السرى"].FormattedValue.ToString();
+                libUser.IsAdmin = isAdmin;
                 _context.LibraryUsers.Update(libUser);
                 _context.SaveChanges();
                 MessageBox.Show("تم التعديل");
@@ -117,13 +123,13 @@ namespace WindowsForm_ofass
                 table.Rows.Clear();
 
 
-                table.Rows.Add(libUser.ReasonNotAllowed, libUser.IsNotAllowedToBorrow, libUser.PhoneNumber, libUser.LibraryUserName, libUser.LibraryUserId);
+                table.Rows.Add(libUser.ReasonNotAllowed, libUser.IsNotAllowedToBorrow, libUser.PhoneNumber, libUser.LibraryUserName, libUser.LibraryUserId,libUser.Password,libUser.IsAdmin);
                 return;
 
             }
             if (libUser != null)
             {
-                table.Rows.Add(libUser.ReasonNotAllowed, libUser.IsNotAllowedToBorrow, libUser.PhoneNumber, libUser.LibraryUserName, libUser.LibraryUserId);
+                table.Rows.Add(libUser.ReasonNotAllowed, libUser.IsNotAllowedToBorrow, libUser.PhoneNumber, libUser.LibraryUserName, libUser.LibraryUserId,libUser.Password, libUser.IsAdmin);
                 return;
             }
             MessageBox.Show("الرجاء إدخال رقم مستخدم صحيح.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
