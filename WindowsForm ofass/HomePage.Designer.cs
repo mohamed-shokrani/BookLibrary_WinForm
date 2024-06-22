@@ -62,7 +62,7 @@
             this.button1.ForeColor = System.Drawing.Color.Black;
             this.button1.Location = new System.Drawing.Point(28, 89);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(91, 22);
+            this.button1.Size = new System.Drawing.Size(105, 35);
             this.button1.TabIndex = 3;
             this.button1.Text = "البحث";
             this.button1.UseVisualStyleBackColor = false;
@@ -72,9 +72,9 @@
             // 
             this.BookManageBtn.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.BookManageBtn.ForeColor = System.Drawing.Color.Black;
-            this.BookManageBtn.Location = new System.Drawing.Point(694, 160);
+            this.BookManageBtn.Location = new System.Drawing.Point(658, 160);
             this.BookManageBtn.Name = "BookManageBtn";
-            this.BookManageBtn.Size = new System.Drawing.Size(91, 27);
+            this.BookManageBtn.Size = new System.Drawing.Size(127, 27);
             this.BookManageBtn.TabIndex = 4;
             this.BookManageBtn.Text = "أدارة الكتاب";
             this.BookManageBtn.UseVisualStyleBackColor = false;
@@ -84,9 +84,9 @@
             // 
             this.BorrowAndReturnBtn.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.BorrowAndReturnBtn.ForeColor = System.Drawing.Color.Black;
-            this.BorrowAndReturnBtn.Location = new System.Drawing.Point(694, 193);
+            this.BorrowAndReturnBtn.Location = new System.Drawing.Point(658, 193);
             this.BorrowAndReturnBtn.Name = "BorrowAndReturnBtn";
-            this.BorrowAndReturnBtn.Size = new System.Drawing.Size(91, 26);
+            this.BorrowAndReturnBtn.Size = new System.Drawing.Size(127, 26);
             this.BorrowAndReturnBtn.TabIndex = 5;
             this.BorrowAndReturnBtn.Text = "الاعارة والاعادة";
             this.BorrowAndReturnBtn.UseVisualStyleBackColor = false;
@@ -96,9 +96,9 @@
             // 
             this.BookCat.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.BookCat.ForeColor = System.Drawing.Color.Black;
-            this.BookCat.Location = new System.Drawing.Point(694, 225);
+            this.BookCat.Location = new System.Drawing.Point(658, 225);
             this.BookCat.Name = "BookCat";
-            this.BookCat.Size = new System.Drawing.Size(91, 23);
+            this.BookCat.Size = new System.Drawing.Size(127, 23);
             this.BookCat.TabIndex = 7;
             this.BookCat.Text = "التصنيف";
             this.BookCat.UseVisualStyleBackColor = false;
@@ -110,7 +110,7 @@
             this.button6.ForeColor = System.Drawing.Color.Black;
             this.button6.Location = new System.Drawing.Point(28, 130);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(91, 23);
+            this.button6.Size = new System.Drawing.Size(105, 41);
             this.button6.TabIndex = 8;
             this.button6.Text = "التقارير";
             this.button6.UseVisualStyleBackColor = false;
@@ -120,9 +120,9 @@
             // 
             this.button8.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.button8.ForeColor = System.Drawing.Color.Black;
-            this.button8.Location = new System.Drawing.Point(28, 164);
+            this.button8.Location = new System.Drawing.Point(28, 177);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(91, 23);
+            this.button8.Size = new System.Drawing.Size(105, 38);
             this.button8.TabIndex = 10;
             this.button8.Text = "حول البرنامج";
             this.button8.UseVisualStyleBackColor = false;
@@ -132,9 +132,9 @@
             // 
             this.button9.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.button9.ForeColor = System.Drawing.Color.Black;
-            this.button9.Location = new System.Drawing.Point(28, 204);
+            this.button9.Location = new System.Drawing.Point(28, 221);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(91, 27);
+            this.button9.Size = new System.Drawing.Size(105, 37);
             this.button9.TabIndex = 11;
             this.button9.Text = "أغلاق البرنامج";
             this.button9.UseVisualStyleBackColor = false;
@@ -180,18 +180,18 @@
             // 
             this.LlibUserManagemntBtn.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.LlibUserManagemntBtn.ForeColor = System.Drawing.Color.Black;
-            this.LlibUserManagemntBtn.Location = new System.Drawing.Point(694, 128);
+            this.LlibUserManagemntBtn.Location = new System.Drawing.Point(658, 128);
             this.LlibUserManagemntBtn.Name = "LlibUserManagemntBtn";
-            this.LlibUserManagemntBtn.Size = new System.Drawing.Size(91, 26);
+            this.LlibUserManagemntBtn.Size = new System.Drawing.Size(127, 26);
             this.LlibUserManagemntBtn.TabIndex = 15;
-            this.LlibUserManagemntBtn.Text = "الاعارة والاعادة";
+            this.LlibUserManagemntBtn.Text = "ادارة المستخدمين";
             this.LlibUserManagemntBtn.UseVisualStyleBackColor = false;
             this.LlibUserManagemntBtn.Click += new System.EventHandler(this.button7_Click);
             // 
             // BookSubManagment
             // 
             this.BookSubManagment.ForeColor = System.Drawing.Color.Black;
-            this.BookSubManagment.Location = new System.Drawing.Point(658, 98);
+            this.BookSubManagment.Location = new System.Drawing.Point(658, 89);
             this.BookSubManagment.Name = "BookSubManagment";
             this.BookSubManagment.Size = new System.Drawing.Size(127, 27);
             this.BookSubManagment.TabIndex = 16;

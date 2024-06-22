@@ -120,25 +120,7 @@ namespace WindowsForm_ofass
             this.Close();
         }
 
-        private void BorrowerName_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DateBorrowing_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DateOfReturn_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void PenaltyValue_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void label7_Click(object sender, EventArgs e)
         {
@@ -227,7 +209,7 @@ namespace WindowsForm_ofass
             dateOfBorrowing = DateTime.MinValue;
             dateOfReturn = DateTime.MinValue;
             bookId = int.MinValue;
-            var book = _context.BookDetails.FirstOrDefault(x => x.SerialNumber == SerialNumber.Text);
+            var book = _context.BookDetails.FirstOrDefault(b => b.SerialNumber == SerialNumber.Text && !b.IsDeleted);
             if (book == null)
             {
                 MessageBox.Show("رقم الكتاب المدخل غير صحيح");
@@ -282,17 +264,17 @@ namespace WindowsForm_ofass
                 MessageBox.Show("الرجاء ادخال اسم المستعير");
                 return false;
             }
-            if (CB_BorrowerName.SelectedValue == null)
-            {
-                MessageBox.Show("الرجاء ادخال اسم المستعير");
-                return false;
-            }
 
             var libUserId = int.Parse(CB_BorrowerName.SelectedValue.ToString());
-            var checkIfUserPreventedFromBorrowing = _context.LibraryUsers.Where(u=>u.LibraryUserId == libUserId).FirstOrDefault();
-            if (checkIfUserPreventedFromBorrowing.IsNotAllowedToBorrow)
+
+            // Check if the user is allowed to borrow
+            var checkIfUserPreventedFromBorrowing = _context.LibraryUsers
+                .Where(u => u.LibraryUserId == libUserId && !u.IsNotAllowedToBorrow)
+                .FirstOrDefault();
+
+            if (checkIfUserPreventedFromBorrowing == null)
             {
-                MessageBox.Show("هذ المستعير غير مسموح له بالاستعارة");
+                MessageBox.Show("هذا المستعير غير مسموح له بالاستعارة");
                 return false;
             }
 
@@ -303,7 +285,9 @@ namespace WindowsForm_ofass
                 return false;
             }
 
+            // Get the book details
             var book = _context.BookDetails.FirstOrDefault(x => x.SerialNumber == SerialNumber.Text);
+
             if (book == null)
             {
                 MessageBox.Show("رقم الكتاب المدخل غير صحيح");
@@ -313,7 +297,7 @@ namespace WindowsForm_ofass
             // Check if the user has borrowed the book before
             var borrowedBooks = _context.BorrowedBooks
                 .Where(x => x.LibraryUserId == libUserId && x.BookId == book.Id)
-                .ToList();
+                .ToList(); // Materialize the results into memory
 
             if (borrowedBooks.Count == 0)
             {
@@ -360,6 +344,7 @@ namespace WindowsForm_ofass
             bookId = book.Id;
             return true;
         }
+
         private bool GetAvailableQuantity(BookDetail book, int requestedQuantity)
         {
             // Get total quantity of the book
@@ -453,9 +438,9 @@ namespace WindowsForm_ofass
                 var libUser = _context.BorrowedBooks.Where(x=>x.LibraryUserId == libUserId && x.BookId==bookId).FirstOrDefault();
                 libUser.ReturnDate = dateOfReturn;
                 var returnBook  = new ReturnedBook();
-                returnBook.ReturnDate = returnBook.ReturnDate;
+                returnBook.ReturnDate = DateOfReturn.Value;
                 returnBook.BookId = bookId; 
-                returnBook.BorrowId = 6;
+                returnBook.BorrowId = libUser.BorrowId;
                 returnBook.LibraryUserId = libUserId;
                 returnBook.ReturnedQuantity = int.Parse( QuantityNeeded_Input.Text);
                 _context.BorrowedBooks.Update(libUser);

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsForm_ofass.Models;
@@ -9,14 +11,16 @@ namespace WindowsForm_ofass
 {
     public partial class BookUpdateAndCreate : Form
     {
+        byte[] _photo = null;
         readonly BookLibraryContext _context;
         int  _bookUpdateObjID;
         BookDetail _bookUpdateObj;
         public BookUpdateAndCreate(int id )
         {
+            
             _bookUpdateObjID = id;
             _context = new BookLibraryContext();
-            _bookUpdateObj = _context.BookDetails.Where( x => x.Id == id ).FirstOrDefault();
+            _bookUpdateObj = _context.BookDetails.Where( x => x.Id == id &&!x.IsDeleted).FirstOrDefault();
             InitializeComponent();
         }
 
@@ -24,11 +28,14 @@ namespace WindowsForm_ofass
 
         private void Form5_Load(object sender, EventArgs e)
         {
+            SerialNum.Enabled = false;
+            SerialNum.BackColor = Color.White;
+            pictureBox1.BackColor = Color.Gray;
+            PopulateAuthorList(0);
+            PopulateBookCatList(0);
+            PopulateBookLangList(0);
+            PopulatePublishingHouseList(0);
             
-                PopulateAuthorList(_bookUpdateObj.Id);
-                PopulateBookCatList(_bookUpdateObj.Id);
-                PopulateBookLangList(_bookUpdateObj.Id);
-                PopulatePublishingHouseList(_bookUpdateObj.Id);
             if (_bookUpdateObj !=null)
             {
                 SerialNum.Text = _bookUpdateObj.SerialNumber;
@@ -37,6 +44,16 @@ namespace WindowsForm_ofass
                 PrintNumber.Text = _bookUpdateObj.PrintNumber.ToString();
                 TotalQuntity.Text = _bookUpdateObj.Quantity.ToString();
                 BookValue.Text = _bookUpdateObj.Value.ToString();
+               
+                if (_bookUpdateObj.Photo !=null)
+                    using (var ms = new MemoryStream(_bookUpdateObj.Photo))
+                    {
+                        pictureBox1.Image = Image.FromStream(ms);
+                    }
+                PopulateAuthorList(_bookUpdateObj.Id);
+                PopulateBookCatList(_bookUpdateObj.Id);
+                PopulateBookLangList(_bookUpdateObj.Id);
+                PopulatePublishingHouseList(_bookUpdateObj.Id);
             }
 
         }
@@ -134,8 +151,8 @@ namespace WindowsForm_ofass
         {
             // Check if any required value is null or empty
             if (IsAnyNullOrEmpty(CB_AuthorName.SelectedValue , CB_BookCategory.SelectedValue, CB_BookLang.SelectedValue,
-                                 CB_PublishingHouse.SelectedValue, SerialNum.Text, BookName.Text,
-                                 BookPagesNum.Text, PrintNumber.Text, TotalQuntity.Text, BookValue.Text))
+                                 CB_PublishingHouse.SelectedValue, BookName.Text,
+                                 BookPagesNum.Text, PrintNumber.Text, TotalQuntity.Text, BookValue.Text, pictureBox1.Image))
             {
                 MessageBox.Show("يرجى ملء جميع الحقول المطلوبة.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -145,7 +162,7 @@ namespace WindowsForm_ofass
                 MessageBox.Show("اسم الكتاب أو الرقم التسلسلي موجود بالفعل.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            
+
 
             // If all required values are provided, create a new BookDetail object
             var book = new BookDetail
@@ -154,12 +171,15 @@ namespace WindowsForm_ofass
                 CategoryId = (int)CB_BookCategory.SelectedValue,
                 LanguageId = (int)CB_BookLang.SelectedValue,
                 PublishingHouseId = (int)CB_PublishingHouse.SelectedValue,
-                SerialNumber = SerialNum.Text,
+             //   SerialNumber = SerialNum.Text,
                 Name = BookName.Text,
                 NumberOfPages = int.Parse(BookPagesNum.Text),
                 PrintNumber = int.Parse(PrintNumber.Text),
                 Quantity = int.Parse(TotalQuntity.Text),
-                Value = decimal.Parse(BookValue.Text)
+                Value = decimal.Parse(BookValue.Text),
+                Photo = _photo,
+                CreatedAt = DateTime.Now,
+
             };
 
             // Add the new book to the context and save changes
@@ -172,15 +192,15 @@ namespace WindowsForm_ofass
         private bool CheckIFBookNameExistsOrSerialNum()
         {
             var checkBookName = _context.BookDetails.Any(x => x.Name == BookName.Text);
-            var checkSerialNum = _context.BookDetails.Any(x => x.SerialNumber == SerialNum.Text);
+           // var checkSerialNum = _context.BookDetails.Any(x => x.SerialNumber == SerialNum.Text);
             if (_bookUpdateObj !=null)
             {
                 var checkBookNameEdit = _context.BookDetails.Any(x => x.Name == BookName.Text && x.Id != _bookUpdateObj.Id);
-                var checkSerialNumEdit = _context.BookDetails.Any(x => x.SerialNumber == SerialNum.Text && x.Id != _bookUpdateObj.Id);
-                return checkBookNameEdit || checkSerialNumEdit;
+                // var checkSerialNumEdit = _context.BookDetails.Any(x => x.SerialNumber == SerialNum.Text && x.Id != _bookUpdateObj.Id);
+                return checkBookNameEdit;//|| checkSerialNumEdit;
             }
-         
-            return checkBookName || checkBookName;
+
+            return checkBookName;//|| checkBookName;
            
         }
 
@@ -201,11 +221,12 @@ namespace WindowsForm_ofass
             // Check if any required value is null or empty
             if (IsAnyNullOrEmpty(CB_AuthorName.SelectedValue, CB_BookCategory.SelectedValue, CB_BookLang.SelectedValue,
                                  CB_PublishingHouse.SelectedValue, SerialNum.Text, BookName.Text,
-                                 BookPagesNum.Text, PrintNumber.Text, TotalQuntity.Text, BookValue.Text))
+                                 BookPagesNum.Text, PrintNumber.Text, TotalQuntity.Text, BookValue.Text,pictureBox1.Image))
             {
                 MessageBox.Show("يرجى ملء جميع الحقول المطلوبة.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+          
             if (CheckIFBookNameExistsOrSerialNum())
             {
                 MessageBox.Show("اسم الكتاب أو الرقم التسلسلي موجود بالفعل.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -225,8 +246,8 @@ namespace WindowsForm_ofass
             _bookUpdateObj.PrintNumber = int.Parse(PrintNumber.Text);
             _bookUpdateObj.Quantity = int.Parse(TotalQuntity.Text);
             _bookUpdateObj.Value = decimal.Parse(BookValue.Text);
-          
-
+            _bookUpdateObj.Photo = _photo;
+            _bookUpdateObj.UpdatedAt = DateTime.Now;
             // Add the new book to the context and save changes
             _context.BookDetails.Update(_bookUpdateObj);
             _context.SaveChanges();
@@ -235,7 +256,7 @@ namespace WindowsForm_ofass
         }
         private void Create_Click(object sender, EventArgs e)
         {
-            if (_bookUpdateObj == null)
+            if (_bookUpdateObjID == 0)
             {
                 CreateNewBook();
             }
@@ -244,6 +265,40 @@ namespace WindowsForm_ofass
                 UpdateBook();
             }
            
+        }
+  
+        private void UploadPhotoBtn_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = openFileDialog.FileName;
+
+                    // Load the selected image into the PictureBox for preview
+                    pictureBox1.Image = Image.FromFile(filePath);
+
+                    // Convert the image to a byte array to store it in the database
+                    byte[] photoBytes = File.ReadAllBytes(filePath);
+                    _photo = photoBytes;
+                }
+            }
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SerialNum_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

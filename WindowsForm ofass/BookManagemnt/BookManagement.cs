@@ -38,10 +38,8 @@ namespace WindowsForm_ofass.BookManagemnt
                 MessageBox.Show("من فضلك ادخل كود الرقم التسلسى للتعديل");
                 return;
             }
-            var getBookDetails = _context.BookDetails.Include(x=>x.Language).Include(x=>x.PublishingHouse)
-                                                           .Include(x=>x.Category)
-                                                           .Include(x=>x.Author)
-                                                           .Where(x=>x.SerialNumber == serialNum).FirstOrDefault();
+            var getBookDetails = _context.BookDetails.Where(x => x.SerialNumber == serialNum && !x.IsDeleted)
+                                                     .FirstOrDefault();
             if (getBookDetails != null)
             {
 
@@ -50,6 +48,48 @@ namespace WindowsForm_ofass.BookManagemnt
                 return;
             }
             MessageBox.Show("من فضلك ادخل كود الرقم التسلسى الصحيح");
+        }
+
+        private void AddNewBookBtn_Click(object sender, EventArgs e)
+        {
+            new BookUpdateAndCreate(0).Show();
+          
+            return;
+        }
+
+        private void DeleteBookBtn_Click(object sender, EventArgs e)
+        {
+            var serialNum = SerialNumberForDelete.Text;
+            if (string.IsNullOrWhiteSpace(serialNum))
+            {
+                MessageBox.Show("من فضلك ادخل كود الرقم التسلسى للحذف");
+                return;
+            }
+            var bookToDelete = _context.BookDetails.Where(x => x.SerialNumber == serialNum && !x.IsDeleted)
+                                                     .FirstOrDefault();
+            if (bookToDelete != null)
+            {
+                var confirmationMessage = $"هل أنت متأكد من حذف الكتاب \"{bookToDelete.Name}\"؟";
+                var confirmResult = MessageBox.Show(confirmationMessage, "تأكيد الحذف", MessageBoxButtons.YesNo);
+
+                if (confirmResult == DialogResult.Yes)
+                {
+                    bookToDelete.IsDeleted = true;
+                    _context.BookDetails.Update(bookToDelete);
+                    _context.SaveChanges();
+                    MessageBox.Show($"تم حذف الكتاب \"{bookToDelete.Name}\" بنجاح.");
+                }
+                else
+                
+                    MessageBox.Show("تم إلغاء حذف الكتاب.");
+                
+              
+            }
+            else
+            
+                MessageBox.Show("لم يتم العثور على الكتاب بالكود الرقمي المدخل.");
+            
+
         }
     }
 }

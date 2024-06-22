@@ -133,23 +133,22 @@ namespace WindowsForm_ofass
                     return dataGridView1;
 
                 case "الرقم":
-                    if (int.TryParse(SearchInput.Text,out int number))
-                    {
+                    
                         if (RadioBtnContains.Checked)
 
-                            list = list.Where(x => x.PrintNumber.HasValue.Equals(number));
+                            list = list.Where(x => x.SerialNumber.Contains(SearchInput.Text.ToLower()));
 
                         if (RadioBtnStartsWith.Checked)
-                            list = list.Where(x => x.PrintNumber.HasValue.Equals(number));
+                        list = list.Where(x => x.SerialNumber.StartsWith(SearchInput.Text.ToLower()));
 
 
-                        dataGridView1.DataSource = list.ToList();
+
+                    dataGridView1.DataSource = list.ToList();
 
                         break;
-                    }
+                   
                     
-                    MessageBox.Show("خطا");
-                    break ;
+                   
                 case "الرقم التسلسلى":
                     
                         if (RadioBtnContains.Checked)

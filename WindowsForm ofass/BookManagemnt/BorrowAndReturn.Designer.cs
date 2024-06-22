@@ -32,7 +32,6 @@ namespace WindowsForm_ofass
         private void InitializeComponent()
         {
             this.textBox4 = new System.Windows.Forms.TextBox();
-            this.PenaltyValue = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -41,14 +40,10 @@ namespace WindowsForm_ofass
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.SerialNumber = new System.Windows.Forms.TextBox();
-            this.CannotBeReturned = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.DateOfBorrowing = new System.Windows.Forms.DateTimePicker();
             this.DateOfReturn = new System.Windows.Forms.DateTimePicker();
             this.CB_BorrowerName = new System.Windows.Forms.ComboBox();
@@ -62,14 +57,6 @@ namespace WindowsForm_ofass
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(100, 20);
             this.textBox4.TabIndex = 23;
-            // 
-            // PenaltyValue
-            // 
-            this.PenaltyValue.Location = new System.Drawing.Point(63, 144);
-            this.PenaltyValue.Name = "PenaltyValue";
-            this.PenaltyValue.Size = new System.Drawing.Size(132, 20);
-            this.PenaltyValue.TabIndex = 4;
-            this.PenaltyValue.TextChanged += new System.EventHandler(this.PenaltyValue_TextChanged);
             // 
             // button1
             // 
@@ -161,28 +148,6 @@ namespace WindowsForm_ofass
             this.label4.TabIndex = 15;
             this.label4.Text = "تاريخ الاعادة";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.SystemColors.Highlight;
-            this.label5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label5.Location = new System.Drawing.Point(77, 167);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(81, 13);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "سبب منع الاعارة";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Red;
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(201, 144);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(37, 13);
-            this.label6.TabIndex = 17;
-            this.label6.Text = "الغرامة";
-            // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
@@ -227,29 +192,6 @@ namespace WindowsForm_ofass
             this.SerialNumber.TabIndex = 25;
             this.SerialNumber.TextChanged += new System.EventHandler(this.SerialNumber_TextChanged);
             // 
-            // CannotBeReturned
-            // 
-            this.CannotBeReturned.AutoSize = true;
-            this.CannotBeReturned.BackColor = System.Drawing.Color.Blue;
-            this.CannotBeReturned.ForeColor = System.Drawing.Color.White;
-            this.CannotBeReturned.Location = new System.Drawing.Point(284, 190);
-            this.CannotBeReturned.Name = "CannotBeReturned";
-            this.CannotBeReturned.Size = new System.Drawing.Size(82, 17);
-            this.CannotBeReturned.TabIndex = 27;
-            this.CannotBeReturned.Text = "منع  الاعارة ";
-            this.CannotBeReturned.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.CannotBeReturned.UseVisualStyleBackColor = false;
-            this.CannotBeReturned.CheckedChanged += new System.EventHandler(this.CannotBeReturned_CheckedChanged);
-            // 
-            // textBox1
-            // 
-            this.textBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.textBox1.Location = new System.Drawing.Point(6, 187);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(272, 79);
-            this.textBox1.TabIndex = 29;
-            // 
             // DateOfBorrowing
             // 
             this.DateOfBorrowing.Location = new System.Drawing.Point(440, 187);
@@ -277,7 +219,7 @@ namespace WindowsForm_ofass
             // 
             // QuantityNeeded_Input
             // 
-            this.QuantityNeeded_Input.Location = new System.Drawing.Point(56, 118);
+            this.QuantityNeeded_Input.Location = new System.Drawing.Point(89, 118);
             this.QuantityNeeded_Input.Name = "QuantityNeeded_Input";
             this.QuantityNeeded_Input.Size = new System.Drawing.Size(139, 20);
             this.QuantityNeeded_Input.TabIndex = 33;
@@ -288,13 +230,13 @@ namespace WindowsForm_ofass
             this.QuantityNeeded_Label.AutoSize = true;
             this.QuantityNeeded_Label.BackColor = System.Drawing.SystemColors.Highlight;
             this.QuantityNeeded_Label.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.QuantityNeeded_Label.Location = new System.Drawing.Point(201, 121);
+            this.QuantityNeeded_Label.Location = new System.Drawing.Point(252, 121);
             this.QuantityNeeded_Label.Name = "QuantityNeeded_Label";
             this.QuantityNeeded_Label.Size = new System.Drawing.Size(73, 13);
             this.QuantityNeeded_Label.TabIndex = 34;
             this.QuantityNeeded_Label.Text = "الكمية المطلوبة";
             // 
-            // Form3
+            // BorrowAndReturn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -304,14 +246,10 @@ namespace WindowsForm_ofass
             this.Controls.Add(this.CB_BorrowerName);
             this.Controls.Add(this.DateOfReturn);
             this.Controls.Add(this.DateOfBorrowing);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.CannotBeReturned);
             this.Controls.Add(this.SerialNumber);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -320,9 +258,8 @@ namespace WindowsForm_ofass
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.PenaltyValue);
             this.Controls.Add(this.textBox4);
-            this.Name = "Form3";
+            this.Name = "BorrowAndReturn";
             this.Text = "شـــاشــة الأعــارة والأعــادة";
             this.Load += new System.EventHandler(this.Form3_Load);
             this.ResumeLayout(false);
@@ -332,7 +269,6 @@ namespace WindowsForm_ofass
 
         #endregion
         private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox PenaltyValue;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
@@ -341,14 +277,10 @@ namespace WindowsForm_ofass
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.TextBox SerialNumber;
-        private System.Windows.Forms.CheckBox CannotBeReturned;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.DateTimePicker DateOfBorrowing;
         private System.Windows.Forms.DateTimePicker DateOfReturn;
         private System.Windows.Forms.ComboBox CB_BorrowerName;

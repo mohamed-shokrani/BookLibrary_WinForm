@@ -76,7 +76,7 @@ namespace WindowsForm_ofass
                 var isNotAllowedToBorrowStr = row.Cells["غير مسموح له بالاستعارة"].FormattedValue.ToString();
                 var reasonNotAllowed = row.Cells["السبب"].FormattedValue.ToString();
                 var password = row.Cells["الرقم السرى"].FormattedValue.ToString(); // Assuming you have a column for password
-
+               
                 // Validate required fields
                 if (string.IsNullOrWhiteSpace(libraryUserName) || string.IsNullOrWhiteSpace(phoneNumberStr))
                 {
@@ -100,7 +100,24 @@ namespace WindowsForm_ofass
                         return;
                     }
                 }
+                var userExists = _context.LibraryUsers.Any(u => u.LibraryUserName == libraryUserName && u.PhoneNumber == phoneNumber);
+                if (userExists)
+                {
+                    MessageBox.Show("المستخدم بالفعل موجود في قاعدة البيانات.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
+                // Validate password length
+                if (password.Length < 6)
+                {
+                    MessageBox.Show("يجب أن يكون طول كلمة المرور على الأقل 6 أحرف.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (true)
+                {
+                    
+                }
                 var newLibUser = new LibraryUser
                 {
                     LibraryUserName = libraryUserName,

@@ -152,8 +152,18 @@ namespace WindowsForm_ofass
         {
             var bookReport = _context.BookDetails.Select(book => new
             {
-                العدد_المتاح_للاستعارة = book.Quantity - (book.BorrowedBooks.Any() ? book.BorrowedBooks.Where(b => b.ReturnDate == null).Sum(b => (int?)b.BorrowedQuantity) ?? 0 : 0),
-                عدد_الكتب_المستعارة = book.BorrowedBooks.Count(x => x.BookId == book.Id),
+                العدد_المتاح_للاستعارة = book.Quantity
+                                          - (book.BorrowedBooks.Any()
+                                             ? book.BorrowedBooks.Where(b => b.ReturnDate == null)
+                                                                .Sum(b => (int?)b.BorrowedQuantity) ?? 0
+                                             : 0)
+                                          + (book.BorrowedBooks.Any()
+                                             ? _context.ReturnedBooks.Where(rb => rb.BookId == book.Id)
+                                                                    .Sum(rb => (int?)rb.ReturnedQuantity) ?? 0
+                                             : 0),
+                عدد_الكتب_المستعارة = book.BorrowedBooks.Sum(x => (int?)x.BorrowedQuantity) ?? 0,
+                الكمية_المسترجعة = _context.ReturnedBooks.Where(b => b.BookId == book.Id)
+                                                           .Sum(x => (int?)x.ReturnedQuantity) ?? 0,
                 عدد_الكتب_الاساسى = book.Quantity,
                 القيمة = book.Value,
                 اسم_المؤالف = book.Author.AuthorName,
@@ -165,6 +175,39 @@ namespace WindowsForm_ofass
 
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = bookReport;
+            DisplayReport f2 = new DisplayReport(dataGridView1);
+            f2.Show();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            var borrowedBooks = _context.BorrowedBooks
+                                        .Include(a => a.LibraryUser)
+                                        .Include(b => b.BookDetail)
+                                        .Where(d => d.DueDate.Date < DateTime.Now && d.ReturnDate == null)
+                                        .ToList();
+
+            var returnedBooks = _context.ReturnedBooks.ToList();
+
+            var report = borrowedBooks.GroupJoin(
+                              returnedBooks,
+                              borrowedBook => borrowedBook.BorrowId,
+                              returnedBook => returnedBook.BorrowId,
+                              (borrowedBook, returnedBooksGroup) => new
+                              {
+                                  عدد_ايام_التاخير = Math.Abs((borrowedBook.DueDate.Date - DateTime.Now.Date).Days),
+                                  تاريخ_الاستعارة = borrowedBook.BorrowDate,
+                                  تاريخ_الارجاع_المفترض = borrowedBook.DueDate,
+                                  الكمية_المستعارة = borrowedBook.BorrowedQuantity,
+                                  الكمية_المسترجعة = returnedBooksGroup.Count(), // Count of returned books
+                                  اسم_الكتاب = borrowedBook.BookDetail.Name,
+                                  محروم = borrowedBook.LibraryUser.IsNotAllowedToBorrow ? "نعم" : "لا",
+                                  اسم_المستعير = borrowedBook.LibraryUser.LibraryUserName
+                              })
+                              .ToList();
+
+            dataGridView1.AutoGenerateColumns = true;
+            dataGridView1.DataSource = report;
             DisplayReport f2 = new DisplayReport(dataGridView1);
             f2.Show();
         }
