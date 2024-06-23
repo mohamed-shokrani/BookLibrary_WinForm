@@ -9,6 +9,7 @@ using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Windows.Forms;
 using WindowsForm_ofass.Constant;
+using WindowsForm_ofass.Helper;
 using WindowsForm_ofass.Models;
 
 namespace WindowsForm_ofass
@@ -38,7 +39,22 @@ namespace WindowsForm_ofass
                 MessageBox.Show("  الرجاء ادخال اسم المستخدم و كلمة المرور ");
                 return;
             }
-           
+            else if (!_context.LibraryUsers.Any())
+            {
+                var (passwordHash, passwordSalt) = PasswordHelper.HashPassword(password);
+                var libUser = new LibraryUser
+                {
+                    LibraryUserName = username,
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt,
+                    IsAdmin = true,
+                };
+                _context.LibraryUsers.Add(libUser);
+                _context.SaveChanges();
+                CurrentUser.UserId = libUser.LibraryUserId;
+                CurrentUser.UserName = libUser.LibraryUserName;
+                CurrentUser.IsAdmin = libUser.IsAdmin;
+            }
             else if (check.Item1)
             {
                 // Set CurrentUser properties upon successful authentication
@@ -56,24 +72,22 @@ namespace WindowsForm_ofass
 
         }
 
-        private (bool,LibraryUser) ValidateCredentials(string username, string password)
+        private (bool, LibraryUser) ValidateCredentials(string username, string password)
         {
             try
             {
-
-                var user = _context.LibraryUsers.FirstOrDefault(x => x.LibraryUserName == username && x.Password == password);
-                if (user != null)
-                    return (true,user);
-                return (false,null);
-              
+                var user = _context.LibraryUsers.FirstOrDefault(x => x.LibraryUserName == username);
+                if (user != null && PasswordHelper.VerifyPassword(password, user.PasswordHash, user.PasswordSalt))
+                    return (true, user);
+                return (false, null);
             }
             catch (Exception ex)
             {
-
+                // Log exception if needed
                 return (false, null);
             }
-           
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
 

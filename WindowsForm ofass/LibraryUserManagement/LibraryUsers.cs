@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsForm_ofass.Helper;
 
 namespace WindowsForm_ofass
 {
@@ -97,7 +98,18 @@ namespace WindowsForm_ofass
                 libUser.PhoneNumber = int.Parse(firstRow.Cells["رقم التليفون"].FormattedValue.ToString());
                 libUser.IsNotAllowedToBorrow = IsNotAllowedToBorrow;
                 libUser.ReasonNotAllowed = reasonNotAllowed;
-                libUser.Password = firstRow.Cells["الرقم السرى"].FormattedValue.ToString();
+                var newPassword = firstRow.Cells["الرقم السرى"].FormattedValue.ToString();
+                if (!string.IsNullOrEmpty(newPassword) && newPassword != "********")
+                {
+                    var (passwordHash, passwordSalt) = PasswordHelper.HashPassword(newPassword);
+                    libUser.PasswordHash = passwordHash;
+                    libUser.PasswordSalt = passwordSalt;
+                }
+                if (string.IsNullOrEmpty(newPassword))
+                {
+                    MessageBox.Show(" الرجاء ادخال الرقم السرى");
+                    return;
+                }
                 libUser.IsAdmin = isAdmin;
                 _context.LibraryUsers.Update(libUser);
                 _context.SaveChanges();
@@ -114,29 +126,24 @@ namespace WindowsForm_ofass
         {
             if (!int.TryParse(UserName.Text, out int id))
             {
-                MessageBox.Show(" يجب ادخال رقم فقط");
+                MessageBox.Show("يجب ادخال رقم فقط");
                 return;
             }
-            var libUser = _context.LibraryUsers.FirstOrDefault(u => u.LibraryUserId == int.Parse(UserName.Text));
-            if (libUser != null && table.Rows.Any())
-            {
-                table.Rows.Clear();
 
-
-                table.Rows.Add(libUser.ReasonNotAllowed, libUser.IsNotAllowedToBorrow, libUser.PhoneNumber, libUser.LibraryUserName, libUser.LibraryUserId,libUser.Password,libUser.IsAdmin);
-                return;
-
-            }
+            var libUser = _context.LibraryUsers.FirstOrDefault(u => u.LibraryUserId == id);
             if (libUser != null)
             {
-                table.Rows.Add(libUser.ReasonNotAllowed, libUser.IsNotAllowedToBorrow, libUser.PhoneNumber, libUser.LibraryUserName, libUser.LibraryUserId,libUser.Password, libUser.IsAdmin);
-                return;
+                table.Rows.Clear();
+                table.Rows.Add(libUser.ReasonNotAllowed, libUser.IsNotAllowedToBorrow, libUser.PhoneNumber, libUser.LibraryUserName, libUser.LibraryUserId, "********", libUser.IsAdmin);
             }
-            MessageBox.Show("الرجاء إدخال رقم مستخدم صحيح.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            else
+            {
+                MessageBox.Show("الرجاء إدخال رقم مستخدم صحيح.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-       
+
+
     }
 }
 

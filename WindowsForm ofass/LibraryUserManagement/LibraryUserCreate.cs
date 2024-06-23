@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsForm_ofass.Helper;
 using WindowsForm_ofass.Models;
 
 namespace WindowsForm_ofass
@@ -114,17 +115,15 @@ namespace WindowsForm_ofass
                     return;
                 }
 
-                if (true)
-                {
-                    
-                }
+               var(passwordHash,PasswordSalt) = PasswordHelper.HashPassword(password);
                 var newLibUser = new LibraryUser
                 {
                     LibraryUserName = libraryUserName,
                     PhoneNumber = phoneNumber,
                     IsNotAllowedToBorrow = isNotAllowedToBorrow,
                     ReasonNotAllowed = isNotAllowedToBorrow ? reasonNotAllowed : null, // Clear reason if not disallowed
-                    Password = password, // Assuming you have a column for password
+                    PasswordHash = passwordHash,
+                    PasswordSalt = PasswordSalt,
                     IsAdmin = false // Assuming all new users are not admins by default
                 };
 

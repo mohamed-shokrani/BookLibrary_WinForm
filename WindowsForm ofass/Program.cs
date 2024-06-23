@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using WindowsForm_ofass.BookManagemnt;
+using WindowsForm_ofass.Models;
 
 namespace WindowsForm_ofass
 {
@@ -15,7 +16,7 @@ namespace WindowsForm_ofass
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new LibraryReport());
+            Application.Run(new SignInPage());
         }
     }
 }
